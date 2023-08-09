@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -38,9 +39,9 @@ namespace RuntimeHandle
 
         public Transform target;
 
-        public UnityEvent startedDraggingHandle = new UnityEvent();
-        public UnityEvent isDraggingHandle = new UnityEvent();
-        public UnityEvent endedDraggingHandle = new UnityEvent();
+        public Action startedDraggingHandle; 
+        public Action<Vector3> isDraggingHandle; 
+        public Action endedDraggingHandle; 
 
         [SerializeField] private bool disableWhenNoTarget;
 
@@ -108,7 +109,7 @@ namespace RuntimeHandle
             if (PointerIsDown() && _draggingHandle != null)
             {
                 _draggingHandle.Interact(_previousMousePosition);
-                isDraggingHandle.Invoke();
+                isDraggingHandle.Invoke(target.position);
             }
 
             if (GetPointerDown() && handle != null)
@@ -127,10 +128,10 @@ namespace RuntimeHandle
 
             _previousMousePosition = GetMousePosition();
 
-            transform.position = target.transform.position;
+            transform.position = target.position;
             if (space == HandleSpace.LOCAL || type == HandleType.SCALE)
             {
-                transform.rotation = target.transform.rotation;
+                transform.rotation = target.rotation;
             }
             else
             {
