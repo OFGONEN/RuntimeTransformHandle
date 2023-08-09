@@ -40,9 +40,9 @@ namespace RuntimeHandle
 
         public Transform target;
 
-        public Action startedDraggingHandle; 
-        public Action isDraggingHandle; 
-        public Action endedDraggingHandle;
+        // public Action startedDraggingHandle; 
+        // public Action isDraggingHandle; 
+        // public Action endedDraggingHandle;
         public Move onMove;
 
         [SerializeField] private bool disableWhenNoTarget;
@@ -115,21 +115,22 @@ namespace RuntimeHandle
             if (PointerIsDown() && _draggingHandle != null)
             {
                 _draggingHandle.Interact(_previousMousePosition);
-                isDraggingHandle.Invoke();
+                // isDraggingHandle.Invoke();
+                onMove(target, _previousTargetPosition, target.position);
             }
 
             if (GetPointerDown() && handle != null)
             {
                 _draggingHandle = handle;
                 _draggingHandle.StartInteraction(hitPoint);
-                startedDraggingHandle.Invoke();
+                // startedDraggingHandle.Invoke();
             }
 
             if (GetPointerUp() && _draggingHandle != null)
             {
                 _draggingHandle.EndInteraction();
                 _draggingHandle = null;
-                endedDraggingHandle.Invoke();
+                // endedDraggingHandle.Invoke();
             }
 
             _previousMousePosition = GetMousePosition();
@@ -229,9 +230,9 @@ namespace RuntimeHandle
 
         static public void Remove(RuntimeTransformHandle handle)
         {
-            handle.startedDraggingHandle = null;
-            handle.isDraggingHandle = null;
-            handle.endedDraggingHandle = null;
+            // handle.startedDraggingHandle = null;
+            // handle.isDraggingHandle = null;
+            // handle.endedDraggingHandle = null;
             handle.onMove = null;
             
             Destroy(handle.gameObject);

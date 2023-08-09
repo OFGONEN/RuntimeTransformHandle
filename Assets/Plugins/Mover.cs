@@ -51,6 +51,7 @@ public class Mover : MonoBehaviour
     private void Move(Transform target, Vector3 oldPosition, Vector3 newPosition)
     {
         Debug.Log($"Move {target.name}: oldPos:{oldPosition} - newPos:{newPosition}", target);
+        Debug.DrawLine(oldPosition, newPosition, Color.red, 3f);
     }
 }
 
