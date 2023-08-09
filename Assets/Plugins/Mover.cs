@@ -42,10 +42,15 @@ public class Mover : MonoBehaviour
         foreach (var newSelected in newSelectedElements)
         {
             var runtimeHandle = // Attach runtime handle to object
-                RuntimeTransformHandle.Create(newSelected, HandleType.POSITION, newSelected.name + "-handle");
+                RuntimeTransformHandle.Create(newSelected, HandleType.POSITION, Move);
             
             oldSelectedElements.Add(newSelected.GetInstanceID(), new SelectionPair(newSelected, runtimeHandle));
         }
+    }
+
+    private void Move(Transform target, Vector3 oldPosition, Vector3 newPosition)
+    {
+        Debug.Log($"Move {target.name}: oldPos:{oldPosition} - newPos:{newPosition}", target);
     }
 }
 

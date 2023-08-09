@@ -40,9 +40,10 @@ namespace RuntimeHandle
 
         public Transform target;
 
-        public event Action startedDraggingHandle; 
-        public event Action isDraggingHandle; 
-        public event Action endedDraggingHandle; 
+        public Action startedDraggingHandle; 
+        public Action isDraggingHandle; 
+        public Action endedDraggingHandle;
+        public Move onMove;
 
         [SerializeField] private bool disableWhenNoTarget;
 
@@ -215,16 +216,28 @@ namespace RuntimeHandle
             }
         }
 
-        static public RuntimeTransformHandle Create(Transform p_target, HandleType p_handleType, string handleName = "New Handle")
+        static public RuntimeTransformHandle Create(Transform p_target, HandleType p_handleType, Move moveDelegate)
         {
-            RuntimeTransformHandle runtimeTransformHandle = new GameObject(handleName).AddComponent<RuntimeTransformHandle>();
+            RuntimeTransformHandle runtimeTransformHandle = new GameObject(p_target.name + " Handle").AddComponent<RuntimeTransformHandle>();
             runtimeTransformHandle.target = p_target;
             runtimeTransformHandle.type = p_handleType;
+            
+            runtimeTransformHandle.onMove = moveDelegate;
 
             return runtimeTransformHandle;
         }
 
-        #region public methods to control handles
+        static public void Remove(RuntimeTransformHandle handle)
+        {
+            handle.startedDraggingHandle = null;
+            handle.isDraggingHandle = null;
+            handle.endedDraggingHandle = null;
+            handle.onMove = null;
+            
+            Destroy(handle.gameObject);
+        }
+
+#region public methods to control handles
         public void SetTarget(Transform newTarget)
         {
             target = newTarget;
@@ -281,6 +294,8 @@ namespace RuntimeHandle
         {
             axes = newAxes;
         }
-        #endregion
+#endregion
     }
+    
+public delegate void Move(Transform target, Vector3 oldPosition, Vector3 newPosition);
 }
