@@ -40,9 +40,9 @@ namespace RuntimeHandle
 
         public Transform target;
 
-        public Action startedDraggingHandle; 
-        public Action isDraggingHandle; 
-        public Action endedDraggingHandle; 
+        public event Action startedDraggingHandle; 
+        public event Action isDraggingHandle; 
+        public event Action endedDraggingHandle; 
 
         [SerializeField] private bool disableWhenNoTarget;
 
