@@ -40,7 +40,7 @@ namespace RuntimeHandle
         public Transform target;
 
         public Action startedDraggingHandle; 
-        public Action<Vector3> isDraggingHandle; 
+        public Action isDraggingHandle; 
         public Action endedDraggingHandle; 
 
         [SerializeField] private bool disableWhenNoTarget;
@@ -109,7 +109,7 @@ namespace RuntimeHandle
             if (PointerIsDown() && _draggingHandle != null)
             {
                 _draggingHandle.Interact(_previousMousePosition);
-                isDraggingHandle.Invoke(target.position);
+                isDraggingHandle.Invoke();
             }
 
             if (GetPointerDown() && handle != null)
