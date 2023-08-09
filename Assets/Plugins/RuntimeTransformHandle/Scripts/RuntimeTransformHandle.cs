@@ -26,6 +26,7 @@ namespace RuntimeHandle
         public Camera handleCamera;
 
         private Vector3 _previousMousePosition;
+        private Vector3 _previousTargetPosition;
         private HandleBase _previousAxis;
 
         private HandleBase _draggingHandle;
@@ -44,6 +45,10 @@ namespace RuntimeHandle
         public Action endedDraggingHandle; 
 
         [SerializeField] private bool disableWhenNoTarget;
+
+        public Vector3 TargetPrevPosition => _previousTargetPosition;
+        public Vector3 TargetPosition => target.position;
+        public Vector3 TargetPositionDelta => target.position - _previousTargetPosition;
 
         void Start()
         {
@@ -127,6 +132,7 @@ namespace RuntimeHandle
             }
 
             _previousMousePosition = GetMousePosition();
+            _previousTargetPosition = target.position;
 
             transform.position = target.position;
             if (space == HandleSpace.LOCAL || type == HandleType.SCALE)
