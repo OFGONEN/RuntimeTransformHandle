@@ -35,7 +35,7 @@ public class Mover : MonoBehaviour
 
         foreach (var deSelected in deselectedElements)
         {
-            Destroy(deSelected.handle.gameObject);
+            RuntimeTransformHandle.Remove(deSelected.handle);
             oldSelectedElements.Remove(deSelected.element.GetInstanceID());
         }
 
