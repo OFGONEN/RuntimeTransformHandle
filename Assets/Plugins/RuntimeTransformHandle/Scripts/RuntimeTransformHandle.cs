@@ -208,9 +208,9 @@ namespace RuntimeHandle
             }
         }
 
-        static public RuntimeTransformHandle Create(Transform p_target, HandleType p_handleType)
+        static public RuntimeTransformHandle Create(Transform p_target, HandleType p_handleType, string handleName = "New Handle")
         {
-            RuntimeTransformHandle runtimeTransformHandle = new GameObject().AddComponent<RuntimeTransformHandle>();
+            RuntimeTransformHandle runtimeTransformHandle = new GameObject(handleName).AddComponent<RuntimeTransformHandle>();
             runtimeTransformHandle.target = p_target;
             runtimeTransformHandle.type = p_handleType;
 
